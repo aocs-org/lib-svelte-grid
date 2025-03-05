@@ -42,6 +42,9 @@ typings/
 # Optional npm cache directory
 .npm
 
+# .npmrc
+.npmrc
+
 # Optional eslint cache
 .eslintcache
 
@@ -60,9 +63,11 @@ typings/
 # next.js build output
 .next
 
-build/
 less.exe.stackdump
 
 # www
 www/__sapper__/
 www/src/components/svelte-grid/
+
+# build
+build/

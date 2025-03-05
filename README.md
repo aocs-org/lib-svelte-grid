@@ -36,8 +36,45 @@
 
 ## Installation
 
+You would also need to include the `.npmrc` in the consuming project, with the appropriate token before you can install this package.
+
+Below is the `.npmrc` code and replace `<token>` with the appropriate token:
+
+```
+engine-strict=true
+@aocs-org:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=<token>
+```
+
 **via NPM**
 
 ```code
-npm i svelte-grid --save-dev
+npm i @aocs-org/lib-svelte-grid --save-dev
 ```
+
+## Publishing
+
+Before trying to publish, you need to install and build the project.
+
+```
+npm install
+npm run build
+```
+
+Next, in this repository's root directory you would also need to create a `.npmrc` file.
+
+Below is the `.npmrc` code and replace `<token>` with the appropriate token:
+
+```
+engine-strict=true
+@aocs-org:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=<token>
+```
+
+After creating the `.npmrc` file, you can run the follow command to publish:
+
+```
+npm publish
+```
+
+> You might need to configure the `package.json` to publish. For example, `version` needs to updated for every subsequent publish.

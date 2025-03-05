@@ -27,6 +27,8 @@
         {gapX}
         {gapY}
         {sensor}
+        {maxRows}
+        {rowHeight}
         container={scroller}
         nativeContainer={container}
         let:resizePointerDown
@@ -57,6 +59,7 @@
   export let fastStart = false;
   export let throttleUpdate = 100;
   export let throttleResize = 100;
+	export let maxRows;
 
   export let scroller = undefined;
   export let sensor = 20;
@@ -117,7 +120,7 @@
         }
 
         containerWidth = width;
-      });
+      })
     });
 
     sizeObserver.observe(container);
@@ -138,9 +141,9 @@
       };
 
       if (fillSpace) {
-        items = moveItemsAroundItem(activeItem, items, getComputedCols, getItemById(detail.id, items));
+        items = moveItemsAroundItem(activeItem, items, getComputedCols, getItemById(detail.id, items), maxRows);
       } else {
-        items = moveItem(activeItem, items, getComputedCols, getItemById(detail.id, items));
+        items = moveItem(activeItem, items, getComputedCols, getItemById(detail.id, items), maxRows);
       }
 
       if (detail.onUpdate) detail.onUpdate();

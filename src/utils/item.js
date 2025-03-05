@@ -45,7 +45,7 @@ const updateItem = (elements, active, position, col) => {
   });
 };
 
-export function moveItemsAroundItem(active, items, cols, original) {
+export function moveItemsAroundItem(active, items, cols, original, maxRows) {
   // Get current item from the breakpoint
   const activeItem = getItem(active, cols);
   const ids = items.map((value) => value.id).filter((value) => value !== activeItem.id);
@@ -64,6 +64,13 @@ export function moveItemsAroundItem(active, items, cols, original) {
   els.forEach((item) => {
     // Find position for element
     let position = findFreeSpaceForItem(matrix, item[cols]);
+
+    // Only apply maxRows constraint if defined
+    if (maxRows !== undefined) {
+      position.y = Math.min(position.y, maxRows - item[cols].h);
+    }
+    position.x = Math.min(position.x, cols - item[cols].w);
+
     // Exclude item
     exclude.push(item.id);
 
@@ -80,11 +87,11 @@ export function moveItemsAroundItem(active, items, cols, original) {
   return tempItems;
 }
 
-export function moveItem(active, items, cols, original) {
+export function moveItem(active, items, cols, original, maxRows) {
   // Get current item from the breakpoint
   const item = getItem(active, cols);
 
-  // Create matrix from the items expect the active
+  // Create matrix from the items except the active
   let matrix = makeMatrixFromItemsIgnore(items, [item.id], getRowsCount(items, cols), cols);
   // Getting the ids of items under active Array<String>
   const closeBlocks = findCloseBlocks(items, matrix, item);
@@ -99,7 +106,7 @@ export function moveItem(active, items, cols, original) {
   // Update items
   items = updateItem(items, active, item, cols);
 
-  // Create matrix of items expect close elements
+  // Create matrix of items except close elements
   matrix = makeMatrixFromItemsIgnore(items, closeBlocks, getRowsCount(items, cols), cols);
 
   // Create temp vars
@@ -113,6 +120,12 @@ export function moveItem(active, items, cols, original) {
   closeObj.forEach((item) => {
     // Find position for element
     let position = findFreeSpaceForItem(matrix, item[cols]);
+
+    // Only apply maxRows constraint if defined
+    if (maxRows !== undefined) {
+      position.y = Math.min(position.y, maxRows - item[cols].h);
+    }
+
     // Exclude item
     exclude.push(item.id);
 
